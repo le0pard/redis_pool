@@ -26,13 +26,11 @@ defmodule RedisPool do
   end
 
   def create_pool(pool_name, size, host, port) do
-    RedisPool.Supervisor.create_pool(pool_name, size,
-      [{:host, host}, {:port, port}])
+    RedisPool.Supervisor.create_pool(pool_name, size, [{:host, host}, {:port, port}])
   end
 
   def create_pool(pool_name, size, host, port, database) do
-    RedisPool.Supervisor.create_pool(pool_name, size,
-      [{:host, host}, {:port, port}, {:database, database}])
+    RedisPool.Supervisor.create_pool(pool_name, size, [{:host, host}, {:port, port}, {:database, database}])
   end
 
   def create_pool(pool_name, size, host, port, database, password) do
