@@ -23,8 +23,13 @@ defmodule RedisPool.Supervisor do
 
   def create_pool(pool_name, size, options) do
     pool_spec = {pool_name, {:poolboy, :start_link,
-      [{:name, {:global, pool_name}}, {:worker_module, :eredis}, {:size, size}, {:max_overflow, 10}]},
-      :permanent, 5000, :worker, [:poolboy, :eredis]} ++ options
+      [[
+        {:name, {:global, pool_name}},
+        {:worker_module, :eredis},
+        {:size, size},
+        {:max_overflow, 10}
+      ] ++ options]},
+      :permanent, 5000, :worker, [:poolboy, :eredis]}
     :supervisor.start_child(__MODULE__, pool_spec)
   end
 
