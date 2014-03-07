@@ -6,13 +6,13 @@ defmodule RedisPool.Supervisor do
       {:ok, p} ->
         pools = p
       _ ->
-        pools = [{:default, [{:size, 10}, {:max_overflow, 10}]}]
+        pools = [{:redis_pool, [{:size, 10}, {:max_overflow, 10}]}]
     end
     case :application.get_env(:redis_pool, :global_or_local) do
       {:ok, g} ->
         global_or_local = g
       _ ->
-        global_or_local = :local
+        global_or_local = :global
     end
     start_link(pools, global_or_local)
   end
@@ -22,14 +22,12 @@ defmodule RedisPool.Supervisor do
   end
 
   def create_pool(pool_name, size, options) do
-    pool_spec = {pool_name, {:poolboy, :start_link,
-      [[
-        {:name, {:global, pool_name}},
-        {:worker_module, :eredis},
-        {:size, size},
-        {:max_overflow, 10}
-      ] ++ options]},
-      :permanent, 5000, :worker, [:poolboy, :eredis]}
+    args = [
+      {:name, {:global, pool_name}},
+      {:worker_module, :eredis},
+      {:size, size},
+      {:max_overflow, 10}] ++ options
+    pool_spec = :poolboy.child_spec(pool_name, args)
     :supervisor.start_child(__MODULE__, pool_spec)
   end
 
@@ -39,22 +37,13 @@ defmodule RedisPool.Supervisor do
   end
 
   def init([pools, global_or_local]) do
-    restart_strategy = :one_for_one
-    max_restarts = 10
-    max_seconds_between_restarts = 10
-    sup_flags = {restart_strategy, max_restarts, max_seconds_between_restarts}
-
-    restart = :permanent
-    shutdown = 5000
-    type = :worker
-
     spec_fun = fn({pool_name, pool_config}) ->
       args = [{:name, {global_or_local, pool_name}}, {:worker_module, :eredis}] ++ pool_config
-      {pool_name, {:poolboy, :start_link, [args]}, restart, shutdown, type, []}
+      :poolboy.child_spec(pool_name, args)
     end
     pool_specs = Enum.map(pools, spec_fun)
 
-    {:ok, {sup_flags, pool_specs}}
+    supervise(pool_specs, strategy: :one_for_one)
   end
 
 end

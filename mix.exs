@@ -11,9 +11,8 @@ defmodule RedisPool.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      registered: [:redis_pool],
       mod: {RedisPool, []},
-      applications: []
+      applications: [:kernel, :stdlib]
     ]
   end
 
