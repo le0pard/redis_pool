@@ -6,7 +6,7 @@ defmodule RedisPool.Supervisor do
       {:ok, p} ->
         pools = p
       _ ->
-        pools = [{:redis_pool, [{:size, 10}, {:max_overflow, 10}]}]
+        pools = []
     end
     case :application.get_env(:redis_pool, :global_or_local) do
       {:ok, g} ->
