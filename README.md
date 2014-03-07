@@ -4,7 +4,7 @@ This is redis pool for [Elixir](http://elixir-lang.org/). It build on top of ere
 
 ## Examples
 
-application start:
+Application start:
 
 ```
 RedisPool.start
@@ -18,23 +18,84 @@ def application do
 end
 ```
 
-Create pool:
+### Create pools
 
 ```
 RedisPool.create_pool(:default, 10)
 
-RedisPool.create_pool(:test, 10, "localhost", 6379)
+RedisPool.create_pool(:test, 10, 'localhost', 6379)
+
+RedisPool.create_pool(:test2, 10, 'localhost', 6379, 0, 'password', 100)
 ```
 
-And use it:
+Also you can set enviroment variables to create pool, when application start:
+
+```
+{env, [
+        {pools, [
+                 {pool1, [
+                            {size, 30},
+                            {max_overflow, 20},
+                            {host, "127.0.0.1"},
+                            {port, 6379}
+                           ]},
+                 {pool2, [
+                            {size, 20},
+                            {max_overflow, 20},
+                            {host, "127.0.0.1"},
+                            {port, 6379},
+                            {database, "user_db"},
+                            {password, "abc"},
+                            {reconnect_sleep, 100}
+                           ]}
+                ]}
+      ]}
+```
+
+Example for mix:
+
+```
+# Configuration for the OTP application
+  def application do
+    [
+      mod: {Example, []},
+      applications: [],
+      env: [pools: [{:default, [{:size, 20}, {:host, '127.0.0.1'}, {:port, 6379}]}]]
+    ]
+  end
+```
+
+### Delete pools
+
+```
+RedisPool.delete_pool(:default)
+
+RedisPool.delete_pool(:test)
+```
+
+### Usage
+
+Usage of pools:
 
 ```
 RedisPool.q({:global, :default}, ["SET", "foo", "bar"])
 
 RedisPool.q({:global, :test}, ["GET", "foo"])
+```
 
+Method `transaction` is execute all redis command between `MULTI` and `EXEC` commands:
+
+```
 RedisPool.transaction {:global, :redis}, fn(redis) ->
   :eredis.q redis, ["SADD", "queues", queue]
   :eredis.q redis, ["LPUSH", "queue", "Test" ]
 end
 ```
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
