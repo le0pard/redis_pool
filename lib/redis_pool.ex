@@ -69,9 +69,10 @@ defmodule RedisPool do
         {:ok, _} = :eredis.q(c, ["MULTI"])
         fun.(c)
         :eredis.q(c, ["EXEC"])
-      rescue error in [c] ->
-        {:ok, _} = :eredis.q(c, ["DISCARD"])
-        {:error, error}
+      rescue
+        error ->
+          {:ok, _} = :eredis.q(c, ["DISCARD"])
+          {:error, error}
       end
     end
     :poolboy.transaction(pool_name, f)
