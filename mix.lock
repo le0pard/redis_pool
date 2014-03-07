@@ -1,0 +1,2 @@
+[ "eredis": {:git, "git://github.com/wooga/eredis.git", "d0f8c7f4d3ab4cc6ebb01539b8a2d6e32004f82a", []},
+  "poolboy": {:git, "git://github.com/devinus/poolboy.git", "64e1eaef0b1e88849c7e7ba9ff75f8cd4dba2a3b", []} ]
