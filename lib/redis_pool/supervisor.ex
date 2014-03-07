@@ -2,8 +2,18 @@ defmodule RedisPool.Supervisor do
   use Supervisor.Behaviour
 
   def start_link do
-    {:ok, pools} = :application.get_env(:eredis_pool, :pools)
-    {:ok, global_or_local} = :application.get_env(:eredis_pool, :global_or_local)
+    case :application.get_env(:redis_pool, :pools) do
+      {:ok, pools} ->
+        pools = p
+      _ ->
+        pools = [{:default, [{:size, 10}, {:max_overflow, 10}]}]
+    end
+    case :application.get_env(:redis_pool, :global_or_local) do
+      {:ok, g} ->
+        global_or_local = g
+      _ ->
+        global_or_local = :local
+    end
     start_link(pools, global_or_local)
   end
 
