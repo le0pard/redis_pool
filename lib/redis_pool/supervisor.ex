@@ -3,7 +3,7 @@ defmodule RedisPool.Supervisor do
 
   def start_link do
     case :application.get_env(:redis_pool, :pools) do
-      {:ok, pools} ->
+      {:ok, p} ->
         pools = p
       _ ->
         pools = [{:default, [{:size, 10}, {:max_overflow, 10}]}]
