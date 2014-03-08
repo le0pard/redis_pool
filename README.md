@@ -1,7 +1,7 @@
 # RedisPool for Elixir
 [![Build Status](https://travis-ci.org/le0pard/redis_pool.png?branch=master)](https://travis-ci.org/le0pard/redis_pool)
 
-This is redis pool for [Elixir](http://elixir-lang.org/). It build on top of eredis and poolboy.
+This is redis pool for [Elixir](http://elixir-lang.org/). Build on top of [eredis](https://github.com/wooga/eredis) and [poolboy](https://github.com/devinus/poolboy).
 
 ## Examples
 
@@ -51,19 +51,6 @@ Also you can set enviroment variables to create pool, when application start:
                            ]}
                 ]}
       ]}
-```
-
-Example for mix:
-
-```
-# Configuration for the OTP application
-  def application do
-    [
-      mod: {Example, []},
-      applications: [],
-      env: [pools: [{:default, [{:size, 20}, {:host, '127.0.0.1'}, {:port, 6379}]}]]
-    ]
-  end
 ```
 
 ### Delete pools
