@@ -1,0 +1,21 @@
+language: erlang
+services:
+  - redis
+before_install:
+  - mkdir -p vendor/elixir
+  - wget -q https://github.com/elixir-lang/elixir/releases/download/v$ELIXIR_VERSION/v$ELIXIR_VERSION.zip && unzip -qq v$ELIXIR_VERSION.zip -d vendor/elixir
+  - export PATH="$PATH:$PWD/vendor/elixir/bin"
+  - export MIX_ENV=test
+install: mix deps.get
+otp_release:
+  - 17.0-rc1
+  - R16B03-1
+  - R16B03
+  - R16B02
+  - R16B01
+  - R16B
+env:
+  - ELIXIR_VERSION=0.12.4
+script: mix test
+notifications:
+  email: false
