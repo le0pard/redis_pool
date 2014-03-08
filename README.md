@@ -1,4 +1,5 @@
 # RedisPool for Elixir
+[![Build Status](https://travis-ci.org/le0pard/redis_pool.png?branch=master)](https://travis-ci.org/le0pard/redis_pool)
 
 This is redis pool for [Elixir](http://elixir-lang.org/). It build on top of eredis and poolboy.
 
