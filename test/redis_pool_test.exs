@@ -68,7 +68,7 @@ defmodule RedisPoolTest do
       :eredis.q redis, ["SET", "test7", "1"]
       :eredis.q redis, ["EXPIRE", "test7", "3"]
     end
-    {:ok, res} = R.q {:global, :default}, ["GET", "test7"]
+    {:ok, res} = R.q {:global, :default}, ["TTL", "test7"]
     assert 2 <= res
   end
 
