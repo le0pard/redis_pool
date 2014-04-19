@@ -4,7 +4,7 @@ defmodule RedisPool.Mixfile do
   def project do
     [ app: :redis_pool,
       version: "0.1.0",
-      elixir: "~> 0.12.1",
+      elixir: "~> 0.12",
       deps: deps ]
   end
 
