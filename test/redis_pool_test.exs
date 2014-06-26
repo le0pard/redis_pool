@@ -3,16 +3,16 @@ defmodule RedisPoolTest do
   alias RedisPool, as: R
 
   setup do
+    on_exit fn ->
+      case R.delete_pool(:default) do
+        :ok -> :ok
+        _ -> :error
+      end
+    end
+
     {:ok, _} = R.create_pool(:default, 10)
     case R.q {:global, :default}, ["FLUSHDB"] do
       {:ok, _} -> :ok
-      _ -> :error
-    end
-  end
-
-  teardown do
-    case R.delete_pool(:default) do
-      :ok -> :ok
       _ -> :error
     end
   end
@@ -32,12 +32,12 @@ defmodule RedisPoolTest do
   end
 
   test "error if use invalid commands" do
-    assert {:error, "ERR wrong number of arguments for 'set' command"} == R.q {:global, :default}, ["SET", "test3"]
-    assert {:error, "ERR wrong number of arguments for 'get' command"} == R.q {:global, :default}, ["GET", "test3", "asdasd"]
+    assert {:error, "ERR wrong number of arguments for 'set' command"} == R.q {:global, :default}, ["SET", "test2"]
+    assert {:error, "ERR wrong number of arguments for 'get' command"} == R.q {:global, :default}, ["GET", "test2", "asdasd"]
   end
 
   test "transaction success" do
-    assert {:ok, :undefined} == R.q {:global, :default}, ["GET", "test4"]
+    assert {:ok, :undefined} == R.q {:global, :default}, ["GET", "test2"]
     assert {:ok, :undefined} == R.q {:global, :default}, ["GET", "test4.1"]
     R.transaction {:global, :default}, fn(redis) ->
       :eredis.q redis, ["SET", "test4", "1"]
