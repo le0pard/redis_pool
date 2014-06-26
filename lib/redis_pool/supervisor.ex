@@ -1,5 +1,5 @@
 defmodule RedisPool.Supervisor do
-  use Supervisor.Behaviour
+  use Supervisor
 
   def start_link do
     case :application.get_env(:redis_pool, :pools) do

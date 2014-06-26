@@ -1,5 +1,5 @@
 defmodule RedisPool do
-  use Application.Behaviour
+  use Application
 
   def start(_type, _args) do
     RedisPool.Supervisor.start_link()
