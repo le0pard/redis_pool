@@ -9,7 +9,6 @@ before_install:
 install: mix deps.get
 otp_release:
   - 17.0
-  - 17.1
 script: mix test
 notifications:
   email: false
