@@ -23,7 +23,7 @@ defmodule RedisPool.Mixfile do
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
   defp deps do
     [
-      { :eredis, github: "wooga/eredis"},
+      { :eredis, github: "wooga/eredis" },
       { :poolboy, github: "devinus/poolboy" }
     ]
   end
