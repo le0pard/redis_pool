@@ -2,18 +2,8 @@ defmodule RedisPool.Supervisor do
   use Supervisor
 
   def start_link do
-    case :application.get_env(:redis_pool, :pools) do
-      {:ok, p} ->
-        pools = p
-      _ ->
-        pools = []
-    end
-    case :application.get_env(:redis_pool, :global_or_local) do
-      {:ok, g} ->
-        global_or_local = g
-      _ ->
-        global_or_local = :global
-    end
+    pools = Application.get_env(:redis_pool, :pools, [])
+    global_or_local = Application.get_env(:redis_pool, :global_or_local, :global)
     start_link(pools, global_or_local)
   end
 
