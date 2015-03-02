@@ -28,14 +28,14 @@
       </header>
       <section>
         <h1>
-<a name="redispool-for-elixir" class="anchor" href="#redispool-for-elixir"><span class="octicon octicon-link"></span></a>RedisPool for Elixir</h1>
+<a id="redispool-for-elixir" class="anchor" href="#redispool-for-elixir" aria-hidden="true"><span class="octicon octicon-link"></span></a>RedisPool for Elixir</h1>
 
 <p><a href="https://travis-ci.org/le0pard/redis_pool"><img src="https://travis-ci.org/le0pard/redis_pool.png?branch=master" alt="Build Status"></a></p>
 
 <p>This is redis pool for <a href="http://elixir-lang.org/">Elixir</a>. Build on top of <a href="https://github.com/wooga/eredis">eredis</a> and <a href="https://github.com/devinus/poolboy">poolboy</a>.</p>
 
 <h2>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <p>Application start:</p>
 
@@ -51,7 +51,7 @@ end
 </code></pre>
 
 <h3>
-<a name="create-pools" class="anchor" href="#create-pools"><span class="octicon octicon-link"></span></a>Create pools</h3>
+<a id="create-pools" class="anchor" href="#create-pools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create pools</h3>
 
 <pre><code>RedisPool.create_pool(:default, 10)
 
@@ -60,31 +60,16 @@ RedisPool.create_pool(:test, 10, 'localhost', 6379)
 RedisPool.create_pool(:test2, 10, 'localhost', 6379, 0, 'password', 100)
 </code></pre>
 
-<p>Also you can set enviroment variables to create pool, when application start:</p>
+<p>Also you can configure redis_pool directly from configuration file to get pools automatically created at application startup. In <code>config/config.exs</code>, add :</p>
 
-<pre><code>{env, [
-        {pools, [
-                 {pool1, [
-                            {size, 30},
-                            {max_overflow, 20},
-                            {host, "127.0.0.1"},
-                            {port, 6379}
-                           ]},
-                 {pool2, [
-                            {size, 20},
-                            {max_overflow, 20},
-                            {host, "127.0.0.1"},
-                            {port, 6379},
-                            {database, "user_db"},
-                            {password, "abc"},
-                            {reconnect_sleep, 100}
-                           ]}
-                ]}
-      ]}
+<pre><code>config :redis_pool, :pools, [
+  test_pool:   [size: 10, hostname: "127.0.0.1", port: 6379],
+  test_pool_2: [size: 20, hostname: "127.0.0.1", port: 6379, database: "user_db", password: "abc", reconnect_sleep: "20"]
+]
 </code></pre>
 
 <h3>
-<a name="delete-pools" class="anchor" href="#delete-pools"><span class="octicon octicon-link"></span></a>Delete pools</h3>
+<a id="delete-pools" class="anchor" href="#delete-pools" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delete pools</h3>
 
 <pre><code>RedisPool.delete_pool(:default)
 
@@ -92,7 +77,7 @@ RedisPool.delete_pool(:test)
 </code></pre>
 
 <h3>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
 
 <p>Usage of pools:</p>
 
@@ -110,7 +95,7 @@ end
 </code></pre>
 
 <h2>
-<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <ol>
 <li>Fork it</li>
