@@ -29,28 +29,13 @@ RedisPool.create_pool(:test, 10, 'localhost', 6379)
 RedisPool.create_pool(:test2, 10, 'localhost', 6379, 0, 'password', 100)
 ```
 
-Also you can set enviroment variables to create pool, when application start:
+Also you can configure redis_pool directly from configuration file to get pools automatically created at application startup. In `config/config.exs`, add :
 
 ```
-{env, [
-        {pools, [
-                 {pool1, [
-                            {size, 30},
-                            {max_overflow, 20},
-                            {host, "127.0.0.1"},
-                            {port, 6379}
-                           ]},
-                 {pool2, [
-                            {size, 20},
-                            {max_overflow, 20},
-                            {host, "127.0.0.1"},
-                            {port, 6379},
-                            {database, "user_db"},
-                            {password, "abc"},
-                            {reconnect_sleep, 100}
-                           ]}
-                ]}
-      ]}
+config :redis_pool, :pools, [
+  test_pool:   [size: 10, hostname: "127.0.0.1", port: 6379],
+  test_pool_2: [size: 20, hostname: "127.0.0.1", port: 6379, database: "user_db", password: "abc", reconnect_sleep: "20"]
+]
 ```
 
 ### Delete pools
