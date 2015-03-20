@@ -33,8 +33,8 @@ Also you can configure redis_pool directly from configuration file to get pools 
 
 ```
 config :redis_pool, :pools, [
-  test_pool:   [size: 10, hostname: "127.0.0.1", port: 6379],
-  test_pool_2: [size: 20, hostname: "127.0.0.1", port: 6379, database: "user_db", password: "abc", reconnect_sleep: "20"]
+  test_pool:   [size: 10, host: '127.0.0.1', port: 6379],
+  test_pool_2: [size: 20, host: '127.0.0.1', port: 6379, database: 'user_db', password: 'abc', reconnect_sleep: '20']
 ]
 ```
 
