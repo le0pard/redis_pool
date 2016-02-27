@@ -1,4 +1,6 @@
 language: elixir
+services:
+  - redis
 elixir:
   - 1.2.3
 otp_release:
