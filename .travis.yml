@@ -3,5 +3,6 @@ elixir:
   - 1.2.3
 otp_release:
   - 18.2.1
+sudo: false
 notifications:
   email: false
