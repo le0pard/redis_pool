@@ -5,6 +5,10 @@ defmodule RedisPool.Mixfile do
     [ app: :redis_pool,
       version: "0.2.3",
       elixir: "~> 1.2",
+      description: description,
+      package: package,
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
       deps: deps ]
   end
 
@@ -13,6 +17,24 @@ defmodule RedisPool.Mixfile do
     [
       mod: {RedisPool, []},
       applications: [:kernel, :stdlib]
+    ]
+  end
+
+  defp description do
+    """
+    Redis pool for Elixir. Build on top of eredis and poolboy.
+    """
+  end
+
+  defp package do
+    [
+      files: ["lib", "test", "mix.exs", "README.md"],
+      maintainers: ["Alexey Vasiliev"],
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/le0pard/redis_pool",
+        "Docs" => "http://leopard.in.ua/redis_pool/"
+      }
     ]
   end
 
