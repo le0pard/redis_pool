@@ -1,2 +1,2 @@
-%{"eredis": {:git, "git://github.com/wooga/eredis.git", "3c9dfc5cf4e2cd79276b138692d63d3b1d298a52", []},
-  "poolboy": {:git, "git://github.com/devinus/poolboy.git", "96d20256e1eba3cc915fde2a3a9f2483bb08bd87", []}}
+%{"eredis": {:hex, :eredis, "1.0.8"},
+  "poolboy": {:hex, :poolboy, "1.5.1"}}

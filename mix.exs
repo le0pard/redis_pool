@@ -3,8 +3,8 @@ defmodule RedisPool.Mixfile do
 
   def project do
     [ app: :redis_pool,
-      version: "0.2.2",
-      elixir: "~> 1.0",
+      version: "0.2.3",
+      elixir: "~> 1.2",
       deps: deps ]
   end
 
@@ -23,8 +23,8 @@ defmodule RedisPool.Mixfile do
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
   defp deps do
     [
-      { :eredis, github: "wooga/eredis" },
-      { :poolboy, github: "devinus/poolboy" }
+      { :eredis, "~> 1.0" },
+      { :poolboy, "~> 1.5" }
     ]
   end
 end
