@@ -48,7 +48,7 @@ defmodule RedisPool do
   end
 
   def q(pool_name, command) do
-    q(pool_name, command, timeout)
+    q(pool_name, command, timeout())
   end
 
   def q(pool_name, command, timeout) do
@@ -56,7 +56,7 @@ defmodule RedisPool do
   end
 
   def qp(pool_name, pipeline) do
-    qp(pool_name, pipeline, timeout)
+    qp(pool_name, pipeline, timeout())
   end
 
   def qp(pool_name, pipeline, timeout) do
