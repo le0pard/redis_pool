@@ -46,7 +46,8 @@ defmodule RedisPool.Mixfile do
   defp deps do
     [
       { :eredis, "~> 1.0" },
-      { :poolboy, "~> 1.5" }
+      { :poolboy, "~> 1.5" },
+      { :ex_doc, ">= 0.0.0", only: :dev }
     ]
   end
 end
