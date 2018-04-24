@@ -52,6 +52,7 @@ defmodule RedisPool do
   end
 
   def q(pool_name, command, timeout) do
+    pool_name = resolve_name(pool_name)
     :poolboy.transaction(pool_name, fn(worker) -> :eredis.q(worker, command, timeout) end)
   end
 
@@ -60,6 +61,7 @@ defmodule RedisPool do
   end
 
   def qp(pool_name, pipeline, timeout) do
+    pool_name = resolve_name(pool_name)
     :poolboy.transaction(pool_name, fn(worker) -> :eredis.qp(worker, pipeline, timeout) end)
   end
 
@@ -75,6 +77,7 @@ defmodule RedisPool do
           {:error, error}
       end
     end
+    pool_name = resolve_name(pool_name)
     :poolboy.transaction(pool_name, f)
   end
 
@@ -82,5 +85,15 @@ defmodule RedisPool do
   defp timeout do
     5000
   end
+
+  defp resolve_name(name) when is_atom(name) do
+    case Application.get_env(:redis_pool, :global_or_local, :global) do
+      :global ->
+        {:global, name}
+      :local ->
+        name
+    end
+  end
+  defp resolve_name(name), do: name
 
 end

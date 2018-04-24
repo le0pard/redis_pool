@@ -12,8 +12,15 @@ defmodule RedisPool.Supervisor do
   end
 
   def create_pool(pool_name, size, options) do
+    pool_name_scope = Application.get_env(:redis_pool, :global_or_local, :global)
+    name = case pool_name do
+      n when is_atom(n) ->
+        {pool_name_scope, n}
+      n -> n
+    end
+
     args = [
-      {:name, {:global, pool_name}},
+      {:name, name},
       {:worker_module, :eredis},
       {:size, size},
       {:max_overflow, 10}]
