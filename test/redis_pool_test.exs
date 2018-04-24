@@ -1,5 +1,5 @@
 defmodule RedisPoolTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   alias RedisPool, as: R
 
   setup do
@@ -70,6 +70,19 @@ defmodule RedisPoolTest do
     end
     {:ok, res} = R.q {:global, :default}, ["TTL", "test7"]
     assert 2 <= res
+  end
+
+  test "short pool name accepted" do
+    Application.put_env(:redis_pool, :global_or_local, :local)
+    {:ok, _} = R.create_pool(:local_pool, 5)
+    assert {:ok, "OK"} == R.q :local_pool, ["SET", "test8", "2"]
+    assert {:ok, "OK"} == R.q :local_pool, ["SET", "test8", "2"]
+
+    Application.put_env(:redis_pool, :global_or_local, :global)
+    {:ok, _} = R.create_pool(:global_pool, 5)
+    assert {:ok, "OK"} == R.q :global_pool, ["SET", "test8", "1"]
+    assert {:ok, "1"} == R.q {:global, :global_pool}, ["GET", "test8"]
+
   end
 
 end
