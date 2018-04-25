@@ -82,7 +82,21 @@ defmodule RedisPoolTest do
     {:ok, _} = R.create_pool(:global_pool, 5)
     assert {:ok, "OK"} == R.q :global_pool, ["SET", "test8", "1"]
     assert {:ok, "1"} == R.q {:global, :global_pool}, ["GET", "test8"]
+  end
 
+  test "use default eredis settings" do
+    test_settings = fn(pool_settings) ->
+      Application.stop :redis_pool
+      Application.put_env :redis_pool, :pools, pool_settings
+      Application.start :redis_pool
+      {:ok, "OK"} = R.q :default, ["SET", "test9", "value"]
+      {:ok, "value"} = R.q :default, ["GET", "test9"]
+    end
+
+    test_settings.(default: [size: 10])
+    test_settings.(default: [size: 10, database: 111])
+    test_settings.(default: [size: 10, host: '127.0.0.1', port: 6379])
+    test_settings.(default: [size: 10, port: 6379, database: '0'])
   end
 
 end
