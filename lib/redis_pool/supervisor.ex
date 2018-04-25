@@ -36,7 +36,7 @@ defmodule RedisPool.Supervisor do
   def init([pools, global_or_local]) do
     spec_fun = fn({pool_name, pool_config}) ->
       args = [{:name, {global_or_local, pool_name}}, {:worker_module, :eredis}] ++ pool_config
-      :poolboy.child_spec(pool_name, args, pool_config)
+      :poolboy.child_spec(pool_name, args, [pool_config])
     end
     pool_specs = Enum.map(pools, spec_fun)
 
