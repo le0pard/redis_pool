@@ -3,7 +3,7 @@ defmodule RedisPool.Mixfile do
 
   def project do
     [ app: :redis_pool,
-      version: "0.2.5",
+      version: "0.2.6",
       elixir: "> 1.0.0",
       description: description(),
       package: package(),
@@ -16,7 +16,12 @@ defmodule RedisPool.Mixfile do
   def application do
     [
       mod: {RedisPool, []},
-      applications: [:kernel, :stdlib]
+      applications: [
+        :kernel,
+        :stdlib,
+        :eredis,
+        :poolboy
+      ]
     ]
   end
 
