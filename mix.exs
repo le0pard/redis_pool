@@ -16,7 +16,12 @@ defmodule RedisPool.Mixfile do
   def application do
     [
       mod: {RedisPool, []},
-      applications: [:kernel, :stdlib]
+      applications: [
+        :kernel,
+        :stdlib,
+        :eredis,
+        :poolboy
+      ]
     ]
   end
 
